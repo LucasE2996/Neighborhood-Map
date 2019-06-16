@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   private markerService: MarkerService;
   private placesService: MapsPlacesService;
   private places: any;
+  private infoWindow = new google.maps.InfoWindow;
 
   constructor(
     markerService: MarkerService,
@@ -48,7 +49,8 @@ export class AppComponent implements OnInit {
         this.places.forEach(place => {
           this.markerService.createMarker(
             place,
-            this.map
+            this.map,
+            this.infoWindow
           );
         });
       },

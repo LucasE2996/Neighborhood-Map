@@ -8,7 +8,8 @@ export class MarkerService {
 
   constructor() { }
 
-  createMarker(place: any, map: google.maps.Map): google.maps.Marker {
+  createMarker(place: any, map: google.maps.Map, infoWindow: google.maps.InfoWindow): google.maps.Marker {
+    const infoWindowContent = this.newInfoWindowContent(place.name, place.icon, place.vicinity);
     let marker: google.maps.Marker;
 
     marker = new google.maps.Marker({
@@ -18,20 +19,18 @@ export class MarkerService {
       animation: google.maps.Animation.DROP,
     });
 
-    const infoWindow = this.newInfoWindow(place.name, place.icon, place.vicinity);
-
     marker.addListener('click', markerClickEvent);
 
     function markerClickEvent() {
+      infoWindow.setContent(infoWindowContent);
       infoWindow.open(map, marker);
     }
 
     return marker;
   }
 
-  private newInfoWindow(title: string, icon: string, address: string) {
-    return new google.maps.InfoWindow({
-      content: `
+  private newInfoWindowContent(title: string, icon: string, address: string) {
+    return `
         <div id="content">
           <div id="siteNotice><img href="${icon}"></img></div>
           <h3 style="font-size:1.2rem;">${title}</h3>
@@ -39,8 +38,7 @@ export class MarkerService {
           <p>${address}</p>
         </div>
         </div>
-      `
-    });
+      `;
   }
 
 }
