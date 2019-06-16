@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class MapsPlacesService {
 
+  private places: Array<any>;
+  private currentFilter: string;
+
   constructor() { }
 
   searchPlace(query: string, location: LatLgn, map: google.maps.Map): Observable<any> {
@@ -28,5 +31,23 @@ export class MapsPlacesService {
         }
       });
     });
+  }
+
+  getPlaces(): Array<any> {
+    return this.places;
+  }
+
+  setPlaces(places: Array<any>): void {
+    this.places = places;
+  }
+
+  getFilteredPlaces(): Array<any> {
+    return this.places.filter(place => {
+      return place.name.includes(this.currentFilter);
+    });
+  }
+
+  setCurrentFilter(text: string): void {
+    this.currentFilter = text;
   }
 }

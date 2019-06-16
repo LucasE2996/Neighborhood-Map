@@ -43,8 +43,8 @@ export class AppComponent implements OnInit {
 
     this.placesService.searchPlace('restaurante', myLatLgn, this.map)
       .subscribe((places: Array<MapsPlace>) => {
+        this.placesService.setPlaces(places);
         this.places = places;
-        console.log(places);
 
         this.places.forEach(place => {
           this.markerService.createMarker(
@@ -53,13 +53,12 @@ export class AppComponent implements OnInit {
             this.infoWindow
           );
         });
+
+        console.log(this.placesService.getPlaces());
       },
         (error: any) => {
           alert(error);
           console.log(error);
-        },
-        () => {
-          console.log('request completed');
         });
   }
 

@@ -1,26 +1,26 @@
 <mz-navbar>
   <mz-navbar-item-container [align]="'left'">
-    <button mz-button id="btn-sidenav-demo">
+    <button mz-button id="btn-sidenav">
       Open
     </button>
   </mz-navbar-item-container>
 </mz-navbar>
 
 <!-- side menu -->
-<mz-sidenav #sidenav [id]="'sidenav-demo'" [collapseButtonId]="'btn-sidenav-demo'">
+<mz-sidenav #sidenav [id]="'sidenav'" [collapseButtonId]="'btn-sidenav'">
   <mz-sidenav-header>
-    Sidenav header
+    <div class="sidenav-item">
+      A better health for a better life!
+    </div>
   </mz-sidenav-header>
-  <mz-sidenav-subheader>Link Subheader</mz-sidenav-subheader>
-  <mz-sidenav-link>
-    <a href="#">First Link</a>
-  </mz-sidenav-link>
   <mz-sidenav-divider></mz-sidenav-divider>
-  <mz-sidenav-link [active]="true">
-    <a href="#">Active Link</a>
-  </mz-sidenav-link>
+  <mz-sidenav-subheader>Search in places here:</mz-sidenav-subheader>
+  <div class="sidenav-item">
+    <mz-input-container>
+      <input mz-input id="filter-input" placeholder="filter places" length="25" type="text">
+    </mz-input-container>
+  </div>
   <mz-sidenav-divider></mz-sidenav-divider>
-  <mz-sidenav-link>
-    <a href="#" class="waves-effect">Second Link With Waves</a>
-  </mz-sidenav-link>
+  <h5 class="sidenav-item">List of places</h5>
+  <mz-sidenav-link *ngFor="let place of places"> <a class="waves-effect">{{ place.name }}</a></mz-sidenav-link>
 </mz-sidenav>

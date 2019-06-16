@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MapsPlacesService } from '../services/maps-places.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  @Input() places: Array<any>;
+
+  private placesService: MapsPlacesService;
+
+  constructor(placesService: MapsPlacesService) {
+    this.placesService = placesService;
+  }
 
   ngOnInit() {
+    console.log(this.places);
   }
 
 }

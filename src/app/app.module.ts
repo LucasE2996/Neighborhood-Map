@@ -5,12 +5,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './header/header.component';
-import { MzSidenavModule } from 'ngx-materialize';
-import { MzButtonModule } from 'ngx-materialize';
-import { MzNavbarModule } from 'ngx-materialize';
+import {
+  MzSidenavModule,
+  MzButtonModule,
+  MzNavbarModule,
+  MzModalModule,
+  MzInputModule,
+} from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
 import { MapsPlacesService } from './services/maps-places.service';
-import { MzModalModule } from 'ngx-materialize';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +28,7 @@ import { MzModalModule } from 'ngx-materialize';
     MzNavbarModule,
     HttpClientModule,
     MzModalModule,
+    MzInputModule,
   ],
   providers: [
     MarkerService,
