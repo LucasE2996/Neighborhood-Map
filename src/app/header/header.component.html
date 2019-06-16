@@ -1,0 +1,25 @@
+<mz-navbar>
+  <mz-navbar-item-container [align]="'left'">
+    <button mz-button id="btn-sidenav-demo">
+      Open
+    </button>
+  </mz-navbar-item-container>
+</mz-navbar>
+
+<mz-sidenav #sidenav [id]="'sidenav-demo'" [collapseButtonId]="'btn-sidenav-demo'">
+  <mz-sidenav-header>
+    Sidenav header
+  </mz-sidenav-header>
+  <mz-sidenav-subheader>Link Subheader</mz-sidenav-subheader>
+  <mz-sidenav-link>
+    <a href="#">First Link</a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link [active]="true">
+    <a href="#">Active Link</a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a href="#" class="waves-effect">Second Link With Waves</a>
+  </mz-sidenav-link>
+</mz-sidenav>
