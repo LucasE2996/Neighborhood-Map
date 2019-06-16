@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   private map: google.maps.Map;
   private markerService: MarkerService;
   private placesService: MapsPlacesService;
-  private places: Array<MapsPlace>;
+  private places: any;
 
   constructor(
     markerService: MarkerService,
@@ -40,21 +40,25 @@ export class AppComponent implements OnInit {
         center: myLatLgn,
       });
 
-    this.placesService.searchPlace('pizza', myLatLgn)
+    this.placesService.searchPlace('restaurante', myLatLgn, this.map)
       .subscribe((places: Array<MapsPlace>) => {
         this.places = places;
         console.log(places);
-      },
-      (error: any) => {
-        alert(error);
-        console.log(error);
-      });
 
-    const marker = this.markerService.createMarker(
-      'Hello World!',
-      myLatLgn,
-      this.map
-    );
+        this.places.forEach(place => {
+          this.markerService.createMarker(
+            place,
+            this.map
+          );
+        });
+      },
+        (error: any) => {
+          alert(error);
+          console.log(error);
+        },
+        () => {
+          console.log('request completed');
+        });
   }
 
 }

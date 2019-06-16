@@ -10,6 +10,7 @@ import { MzButtonModule } from 'ngx-materialize';
 import { MzNavbarModule } from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
 import { MapsPlacesService } from './services/maps-places.service';
+import { MzModalModule } from 'ngx-materialize';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { MapsPlacesService } from './services/maps-places.service';
     MzButtonModule,
     MzNavbarModule,
     HttpClientModule,
+    MzModalModule,
   ],
   providers: [
     MarkerService,

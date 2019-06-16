@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MapsPlace } from '../models/place.model';
 import { LatLgn } from '../models/marker.model';
 import { Observable } from 'rxjs';
 
@@ -9,12 +8,25 @@ import { Observable } from 'rxjs';
 })
 export class MapsPlacesService {
 
-  private API_KEY = 'AIzaSyBvNk5sVJyAPFC0HueBLjCO-7IsBD1F2Dw';
+  constructor() { }
 
-  constructor(private http: HttpClient) { }
+  searchPlace(query: string, location: LatLgn, map: google.maps.Map): Observable<any> {
+    const service = new google.maps.places.PlacesService(map);
 
-  searchPlace(query: string, location: LatLgn): Observable<any> {
-// tslint:disable-next-line: max-line-length
-    return this.http.get<any>(`/api/maps/place/textsearch/json?query=${query}&location=${location.lat},${location.lng}&radius=100&key=${this.API_KEY}`);
+    const request = {
+      type: query,
+      keyword: query,
+      radius: 500,
+      location: location,
+    };
+
+    return new Observable((observer) => {
+      service.nearbySearch(request, function (results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          observer.next(results);
+          observer.complete();
+        }
+      });
+    });
   }
 }
