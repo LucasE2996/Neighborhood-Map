@@ -1,14 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
 
+import { HeaderComponent } from './header/header.component';
 import { MzSidenavModule } from 'ngx-materialize';
 import { MzButtonModule } from 'ngx-materialize';
 import { MzNavbarModule } from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
+import { MapsPlacesService } from './services/maps-places.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,9 +21,11 @@ import { MarkerService } from './services/marker.service';
     MzSidenavModule,
     MzButtonModule,
     MzNavbarModule,
+    HttpClientModule,
   ],
   providers: [
-    MarkerService
+    MarkerService,
+    MapsPlacesService,
   ],
   bootstrap: [AppComponent]
 })

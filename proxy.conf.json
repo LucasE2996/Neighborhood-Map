@@ -1,0 +1,7 @@
+{
+    "/api/maps": {
+        "target": "https://maps.googleapis.com/maps/api",
+        "secure": false,
+        "pathRewrite": { "^/api" : ""}
+    }
+}
