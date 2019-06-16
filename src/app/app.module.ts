@@ -7,7 +7,8 @@ import { HeaderComponent } from './header/header.component';
 
 import { MzSidenavModule } from 'ngx-materialize';
 import { MzButtonModule } from 'ngx-materialize';
-import { MzNavbarModule } from 'ngx-materialize'
+import { MzNavbarModule } from 'ngx-materialize';
+import { MarkerService } from './services/marker.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,9 @@ import { MzNavbarModule } from 'ngx-materialize'
     MzButtonModule,
     MzNavbarModule,
   ],
-  providers: [],
+  providers: [
+    MarkerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
