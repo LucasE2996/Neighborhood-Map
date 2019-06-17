@@ -24,6 +24,11 @@ export class MarkerService {
     function markerClickEvent() {
       infoWindow.setContent(infoWindowContent);
       infoWindow.open(map, marker);
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+
+      setTimeout(() => {
+        marker.setAnimation(null);
+      }, 1000);
     }
 
     return marker;

@@ -43,11 +43,11 @@ export class MapsPlacesService {
 
   getFilteredPlaces(): Array<any> {
     return this.places.filter(place => {
-      return place.name.includes(this.currentFilter);
+      return place.name.toLowerCase().includes(this.currentFilter);
     });
   }
 
   setCurrentFilter(text: string): void {
-    this.currentFilter = text;
+    this.currentFilter = text.toLowerCase();
   }
 }

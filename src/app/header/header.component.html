@@ -1,6 +1,6 @@
 <mz-navbar>
   <mz-navbar-item-container [align]="'left'">
-    <button mz-button id="btn-sidenav">
+    <button mz-button id="btn-sidenav" (click)="initData()">
       Open
     </button>
   </mz-navbar-item-container>
@@ -17,10 +17,10 @@
   <mz-sidenav-subheader>Search in places here:</mz-sidenav-subheader>
   <div class="sidenav-item">
     <mz-input-container>
-      <input mz-input id="filter-input" placeholder="filter places" length="25" type="text">
+      <input mz-input id="filter-input" label="filter places" length="25" type="text" (input)="onChangeInput($event.target.value)">
     </mz-input-container>
   </div>
   <mz-sidenav-divider></mz-sidenav-divider>
   <h5 class="sidenav-item">List of places</h5>
-  <mz-sidenav-link *ngFor="let place of places"> <a class="waves-effect">{{ place.name }}</a></mz-sidenav-link>
+  <mz-sidenav-link *ngFor="let place of filteredPlaces"> <a class="waves-effect" (click)="itemClickEvent($event.target.innerText)">{{ place.name }}</a></mz-sidenav-link>
 </mz-sidenav>

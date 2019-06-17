@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   private placesService: MapsPlacesService;
   private places: any;
   private infoWindow = new google.maps.InfoWindow;
+  private markers: Array<google.maps.Marker> = [];
 
   constructor(
     markerService: MarkerService,
@@ -47,17 +48,14 @@ export class AppComponent implements OnInit {
         this.places = places;
 
         this.places.forEach(place => {
-          this.markerService.createMarker(
+          this.markers.push(this.markerService.createMarker(
             place,
             this.map,
             this.infoWindow
-          );
+          ));
         });
-
-        console.log(this.placesService.getPlaces());
       },
         (error: any) => {
-          alert(error);
           console.log(error);
         });
   }
