@@ -11,6 +11,7 @@ import {
   MzNavbarModule,
   MzModalModule,
   MzInputModule,
+  MzSpinnerModule,
 } from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
 import { MapsPlacesService } from './services/maps-places.service';
@@ -29,6 +30,7 @@ import { MapsPlacesService } from './services/maps-places.service';
     HttpClientModule,
     MzModalModule,
     MzInputModule,
+    MzSpinnerModule,
   ],
   providers: [
     MarkerService,

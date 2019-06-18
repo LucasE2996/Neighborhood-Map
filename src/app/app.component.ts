@@ -13,6 +13,8 @@ import { MapsPlace } from './models/place.model';
 export class AppComponent implements OnInit {
   @ViewChild('gmap') gmapElement: any;
 
+  public loadingFlag = true;
+
   private map: google.maps.Map;
   private placesService: MapsPlacesService;
   private infoWindow = new google.maps.InfoWindow;
@@ -28,6 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   initMap() {
+    this.loadingFlag = false;
     const myLatLgn: LatLgn = { lat: -23.6020717, lng: -46.6763941 };
 
     this.map = new google.maps.Map(
@@ -43,6 +46,9 @@ export class AppComponent implements OnInit {
       },
         (error: any) => {
           console.log(error);
+        },
+        () => {
+          this.loadingFlag = true;
         });
   }
 
