@@ -1,5 +1,20 @@
 <app-header [map]="map"></app-header>
 <div #gmap id="map"></div>
+
+<!-- modal  -->
+<mz-modal #modalError [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions">
+    <mz-modal-header>
+        <h4>Error</h4>
+    </mz-modal-header>
+    <mz-modal-content>
+        Oh oh! Something went wront!   :(
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" mz-modal-close>Close</button>
+    </mz-modal-footer>
+</mz-modal>
+
+<!-- loading -->
 <div class="loading-wrapper" [class.display-none]="loadingFlag">
     <mz-spinner [color]="'blue'" [size]="'big'" id="main-spinner" class="loading">
     </mz-spinner>

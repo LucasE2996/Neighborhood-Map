@@ -12,6 +12,7 @@ import { MapsPlace } from './models/place.model';
 })
 export class AppComponent implements OnInit {
   @ViewChild('gmap') gmapElement: any;
+  @ViewChild('modalError') modalError: any;
 
   public loadingFlag = true;
 
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
         this.placesService.setPlaces(places, this.map, this.infoWindow);
       },
         (error: any) => {
+          this.modalError.openModal();
           console.log(error);
         },
         () => {
