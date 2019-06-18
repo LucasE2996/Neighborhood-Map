@@ -14,17 +14,12 @@ export class AppComponent implements OnInit {
   @ViewChild('gmap') gmapElement: any;
 
   private map: google.maps.Map;
-  private markerService: MarkerService;
   private placesService: MapsPlacesService;
-  private places: any;
   private infoWindow = new google.maps.InfoWindow;
-  private markers: Array<google.maps.Marker> = [];
 
   constructor(
-    markerService: MarkerService,
     placesService: MapsPlacesService,
   ) {
-    this.markerService = markerService;
     this.placesService = placesService;
   }
 
@@ -44,16 +39,7 @@ export class AppComponent implements OnInit {
 
     this.placesService.searchPlace('restaurante', myLatLgn, this.map)
       .subscribe((places: Array<MapsPlace>) => {
-        this.placesService.setPlaces(places);
-        this.places = places;
-
-        this.places.forEach(place => {
-          this.markers.push(this.markerService.createMarker(
-            place,
-            this.map,
-            this.infoWindow
-          ));
-        });
+        this.placesService.setPlaces(places, this.map, this.infoWindow);
       },
         (error: any) => {
           console.log(error);

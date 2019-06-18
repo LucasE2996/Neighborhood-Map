@@ -6,9 +6,23 @@ import { } from 'googlemaps';
 })
 export class MarkerService {
 
+  private markers: Array<google.maps.Marker> = [];
+
   constructor() { }
 
-  createMarker(place: any, map: google.maps.Map, infoWindow: google.maps.InfoWindow): google.maps.Marker {
+  getMarkers(): Array<google.maps.Marker> {
+    return this.markers;
+  }
+
+  filterMarkers(text: string, map: google.maps.Map): void {
+    this.markers.forEach(marker => {
+      marker.getTitle().toLowerCase().includes(text.toLowerCase())
+        ? marker.setMap(map)
+        : marker.setMap(null);
+    });
+  }
+
+  createMarker(place: any, map: google.maps.Map, infoWindow: google.maps.InfoWindow): void {
     const infoWindowContent = this.newInfoWindowContent(place.name, place.icon, place.vicinity);
     let marker: google.maps.Marker;
 
@@ -31,7 +45,7 @@ export class MarkerService {
       }, 1000);
     }
 
-    return marker;
+    this.markers.push(marker);
   }
 
   private newInfoWindowContent(title: string, icon: string, address: string) {

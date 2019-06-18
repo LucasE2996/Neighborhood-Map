@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MapsPlacesService } from '../services/maps-places.service';
+import { MarkerService } from '../services/marker.service';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +10,18 @@ import { MapsPlacesService } from '../services/maps-places.service';
 export class HeaderComponent {
 
   @ViewChild('sidenav') sidenav: any;
-  @Input() markers: Array<google.maps.Marker>;
+  @Input() map: google.maps.Map;
 
   private placesService: MapsPlacesService;
+  private markerService: MarkerService;
   private filteredPlaces: Array<any>;
 
-  constructor(placesService: MapsPlacesService) {
+  constructor(
+    placesService: MapsPlacesService,
+    markerService: MarkerService,
+  ) {
     this.placesService = placesService;
+    this.markerService = markerService;
   }
 
   /**
@@ -33,7 +39,7 @@ export class HeaderComponent {
    */
   onChangeInput(value: string): void {
     this.placesService.setCurrentFilter(value);
-    this.filteredPlaces = this.placesService.getFilteredPlaces();
+    this.filteredPlaces = this.placesService.getFilteredPlaces(this.map);
   }
 
   /**
@@ -41,7 +47,7 @@ export class HeaderComponent {
    * @param innerText The item clicked name
    */
   itemClickEvent(innerText: string) {
-    const marker = this.markers.find(item => {
+    const marker = this.markerService.getMarkers().find(item => {
       return item.getTitle().toLowerCase().includes(innerText.toLowerCase());
     });
 

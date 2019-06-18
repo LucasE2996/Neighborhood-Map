@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LatLgn } from '../models/marker.model';
 import { Observable } from 'rxjs';
+import { MarkerService } from './marker.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,11 @@ export class MapsPlacesService {
 
   private places: Array<any>;
   private currentFilter: string;
+  private markerService: MarkerService;
 
-  constructor() { }
+  constructor(markerService: MarkerService) {
+    this.markerService = markerService;
+  }
 
   searchPlace(query: string, location: LatLgn, map: google.maps.Map): Observable<any> {
     const service = new google.maps.places.PlacesService(map);
@@ -37,14 +41,22 @@ export class MapsPlacesService {
     return this.places;
   }
 
-  setPlaces(places: Array<any>): void {
+  setPlaces(places: Array<any>, map: google.maps.Map, infoWindow: google.maps.InfoWindow): void {
+    if (!places) {
+      return;
+    }
     this.places = places;
+    this.places.forEach(place => {
+      this.markerService.createMarker(place, map, infoWindow);
+    });
   }
 
-  getFilteredPlaces(): Array<any> {
-    return this.places.filter(place => {
+  getFilteredPlaces(map: google.maps.Map): Array<any> {
+    const filteredPlaces = this.places.filter(place => {
       return place.name.toLowerCase().includes(this.currentFilter);
     });
+    this.markerService.filterMarkers(this.currentFilter, map);
+    return filteredPlaces;
   }
 
   setCurrentFilter(text: string): void {
