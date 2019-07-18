@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { LatLgn } from '../models/marker.model';
 import { Observable } from 'rxjs';
 import { MarkerService } from './marker.service';
+import { LatLgn } from '../models/marker.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +11,23 @@ export class MapsPlacesService {
   private places: Array<any>;
   private currentFilter: string;
   private markerService: MarkerService;
+  private currentMap: google.maps.Map;
+  private infoWindow: google.maps.InfoWindow;
+  private myLatLng: LatLgn;
 
   constructor(markerService: MarkerService) {
     this.markerService = markerService;
   }
 
-  searchPlace(query: string, location: LatLgn, map: google.maps.Map): Observable<any> {
-    const service = new google.maps.places.PlacesService(map);
+  searchPlace(query: string): Observable<any> {
+    const service = new google.maps.places.PlacesService(this.getCurrentMap());
 
     const request = {
-      type: query,
-      keyword: query,
-      radius: 500,
-      location: location,
+      type: 'food',
+      keyword: 'food',
+      name: query,
+      radius: 5000,
+      location: this.getLatLng(),
     };
 
     return new Observable((observer) => {
@@ -41,25 +44,49 @@ export class MapsPlacesService {
     return this.places;
   }
 
-  setPlaces(places: Array<any>, map: google.maps.Map, infoWindow: google.maps.InfoWindow): void {
+  setPlaces(places: Array<any>): void {
     if (!places) {
       return;
     }
     this.places = places;
     this.places.forEach(place => {
-      this.markerService.createMarker(place, map, infoWindow);
+      this.markerService.createMarker(place, this.getCurrentMap(), this.getInfoWindow());
     });
   }
 
-  getFilteredPlaces(map: google.maps.Map): Array<any> {
+  getFilteredPlaces(): Array<any> {
     const filteredPlaces = this.places.filter(place => {
       return place.name.toLowerCase().includes(this.currentFilter);
     });
-    this.markerService.filterMarkers(this.currentFilter, map);
+    this.markerService.filterMarkers(this.currentFilter, this.getCurrentMap());
     return filteredPlaces;
   }
 
   setCurrentFilter(text: string): void {
     this.currentFilter = text.toLowerCase();
+  }
+
+  setCurrentMap(map: google.maps.Map): void {
+    this.currentMap = map;
+  }
+
+  setInfoWindow(infoWindow: google.maps.InfoWindow): void {
+    this.infoWindow = infoWindow;
+  }
+
+  setLatLng(latLng: LatLgn): void {
+    this.myLatLng = latLng;
+  }
+
+  getCurrentMap(): google.maps.Map {
+    return this.currentMap;
+  }
+
+  getInfoWindow(): google.maps.InfoWindow {
+    return this.infoWindow;
+  }
+
+  getLatLng(): LatLgn {
+    return this.myLatLng;
   }
 }

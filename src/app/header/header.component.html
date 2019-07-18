@@ -1,13 +1,15 @@
-<mz-navbar>
-  <mz-navbar-item-container [align]="'left'">
-    <button mz-button id="btn-sidenav" (click)="initData()">
-      Open
-    </button>
-  </mz-navbar-item-container>
+<mz-navbar [navbarClass]="'navBar'">
+  <button mz-button id="btn-sidenav" (click)="initData()" [float]="true">
+    <i mz-icon [align]="'left'" [icon]="'menu'" [size]="'medium'">
+    </i>
+  </button>
+  <mz-input-container [inline]="true" class="white-text margin-left-10">
+    <input #placeInput mz-input placeholder="Search" id="search-input" type="text" class="white-text" (keyup)="fireSearch(placeInput.value, $event)">
+  </mz-input-container>
 </mz-navbar>
 
 <!-- side menu -->
-<mz-sidenav #sidenav [id]="'sidenav'" [collapseButtonId]="'btn-sidenav'">
+<mz-sidenav #sidenav [id]="'sidenav'" [collapseButtonId]="'btn-sidenav'" [backgroundClass]="'dark-sidenav'">
   <mz-sidenav-header>
     <div class="sidenav-item">
       A better health for a better life!
@@ -17,10 +19,11 @@
   <mz-sidenav-subheader>Search in places here:</mz-sidenav-subheader>
   <div class="sidenav-item">
     <mz-input-container>
-      <input mz-input id="filter-input" label="filter places" length="25" type="text" (input)="onChangeInput($event.target.value)">
+      <input mz-input id="filter-input" label="filter places" type="text" (input)="onChangeInput($event.target.value)">
     </mz-input-container>
   </div>
   <mz-sidenav-divider></mz-sidenav-divider>
   <h5 class="sidenav-item">List of places</h5>
-  <mz-sidenav-link *ngFor="let place of filteredPlaces"> <a class="waves-effect" (click)="itemClickEvent($event.target.innerText)">{{ place.name }}</a></mz-sidenav-link>
+  <mz-sidenav-link *ngFor="let place of filteredPlaces"> <a class="waves-effect"
+      (click)="itemClickEvent($event.target.innerText)">{{ place.name }}</a></mz-sidenav-link>
 </mz-sidenav>

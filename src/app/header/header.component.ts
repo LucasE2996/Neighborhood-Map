@@ -1,16 +1,17 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MapsPlacesService } from '../services/maps-places.service';
 import { MarkerService } from '../services/marker.service';
+import { MapsPlace } from '../models/place.model';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
 
   @ViewChild('sidenav') sidenav: any;
-  @Input() map: google.maps.Map;
+  @Input() modalError: any;
+  @Input() loadingFlag: boolean;
 
   private placesService: MapsPlacesService;
   private markerService: MarkerService;
@@ -29,8 +30,11 @@ export class HeaderComponent {
    */
   initData(): void {
     if (!this.filteredPlaces) {
+      this.filteredPlaces = [];
       this.filteredPlaces = this.placesService.getPlaces();
+      return;
     }
+    this.filteredPlaces = this.placesService.getPlaces();
   }
 
   /**
@@ -39,7 +43,7 @@ export class HeaderComponent {
    */
   onChangeInput(value: string): void {
     this.placesService.setCurrentFilter(value);
-    this.filteredPlaces = this.placesService.getFilteredPlaces(this.map);
+    this.filteredPlaces = this.placesService.getFilteredPlaces();
   }
 
   /**
@@ -52,9 +56,28 @@ export class HeaderComponent {
     });
 
     if (marker) {
-// tslint:disable-next-line: no-unused-expression
+      // tslint:disable-next-line: no-unused-expression
       new google.maps.event.trigger(marker, 'click');
       this.sidenav.opened = false;
+    }
+  }
+
+  fireSearch(value: string, event: any) {
+    this.loadingFlag = false;
+    const key = event.code;
+    if (key.toLowerCase().includes('enter')) {
+      this.markerService.clearMarkers();
+      this.placesService.searchPlace(value)
+        .subscribe((places: Array<MapsPlace>) => {
+          this.placesService.setPlaces(places);
+        },
+          (error: any) => {
+            this.modalError.openModal();
+            console.error(error);
+          },
+          () => {
+            this.loadingFlag = true;
+          });
     }
   }
 }

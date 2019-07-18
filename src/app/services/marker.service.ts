@@ -60,4 +60,13 @@ export class MarkerService {
       `;
   }
 
+  /**
+   * Clear all markers from map and delete them
+   */
+  public clearMarkers() {
+    this.markers.forEach((marker: google.maps.Marker) => {
+      marker.setMap(null);
+    });
+    this.markers = [];
+  }
 }

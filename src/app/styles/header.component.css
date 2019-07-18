@@ -1,0 +1,15 @@
+.sidenav-item {
+    padding: 0 30px !important;
+}
+
+.dark-sidenav,
+.dark-sidenav ul,
+.dark-sidenav li,
+.dark-sidenav a {
+    background-color: #2c2f33 !important;
+    color: #fff !important;
+}
+
+li a:hover {
+    background-color: #7289da !important;
+}
