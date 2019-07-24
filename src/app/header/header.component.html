@@ -3,16 +3,17 @@
     <i mz-icon [align]="'left'" [icon]="'menu'" [size]="'medium'">
     </i>
   </button>
-  <mz-input-container [inline]="true" class="white-text margin-left-10">
-    <input #placeInput mz-input placeholder="Search" id="search-input" type="text" class="white-text" (keyup)="fireSearch(placeInput.value, $event)">
-  </mz-input-container>
+  <button mz-button id="btn-sidenav" (click)="bottomSheetModal.openModal()" [float]="true" class="margin-left-10">
+    <i mz-icon [align]="'left'" [icon]="'search'" [size]="'medium'">
+    </i>
+  </button>
 </mz-navbar>
 
 <!-- side menu -->
 <mz-sidenav #sidenav [id]="'sidenav'" [collapseButtonId]="'btn-sidenav'" [backgroundClass]="'dark-sidenav'">
   <mz-sidenav-header>
     <div class="sidenav-item">
-      A better health for a better life!
+      Welcome to MyPlace!
     </div>
   </mz-sidenav-header>
   <mz-sidenav-divider></mz-sidenav-divider>
@@ -27,3 +28,40 @@
   <mz-sidenav-link *ngFor="let place of filteredPlaces"> <a class="waves-effect"
       (click)="itemClickEvent($event.target.innerText)">{{ place.name }}</a></mz-sidenav-link>
 </mz-sidenav>
+
+<mz-modal #bottomSheetModal [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions">
+  <mz-modal-header>
+    <h4>Modal Title</h4>
+  </mz-modal-header>
+  <mz-modal-content>
+    <mz-select-container [inline]="true">
+      <select mz-select id="options-select" [placeholder]="'Select a city'">
+        <optgroup label="brazil">
+          <option value="">São Paulo</option>
+          <option value="">São José dos Campos</option>
+        </optgroup>
+        <optgroup label="canada">
+          <option data-icon="assets/select-icon-3.jpg" class="left circle">Vancouver</option>
+        </optgroup>
+      </select>
+    </mz-select-container>
+    <mz-select-container [inline]="true">
+      <select mz-select id="options-select" [placeholder]="'Select a category'">
+        <optgroup label="brazil">
+          <option value="">São Paulo</option>
+          <option value="">São José dos Campos</option>
+        </optgroup>
+        <optgroup label="canada">
+          <option value="">Vancouver</option>
+        </optgroup>
+      </select>
+    </mz-select-container>
+    <mz-input-container [inline]="true" class="white-text margin-left-10">
+      <input #placeInput mz-input placeholder="Search" id="search-input" type="text">
+    </mz-input-container>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Close</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="fireSearch(placeInput.value)">Search</button>
+  </mz-modal-footer>
+</mz-modal>

@@ -13,3 +13,7 @@
 li a:hover {
     background-color: #7289da !important;
 }
+
+.navBar mz-select-container>div {
+    width: 250px;
+}
