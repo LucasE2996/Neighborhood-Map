@@ -19,12 +19,12 @@ export class MapsPlacesService {
     this.markerService = markerService;
   }
 
-  searchPlace(query: string): Observable<any> {
+  searchPlace(query: string, keyword: string): Observable<any> {
     const service = new google.maps.places.PlacesService(this.getCurrentMap());
 
     const request = {
       type: 'food',
-      keyword: 'food',
+      keyword: keyword,
       name: query,
       radius: 5000,
       location: this.getLatLng(),
@@ -48,10 +48,13 @@ export class MapsPlacesService {
     if (!places) {
       return;
     }
+    const bounds = new google.maps.LatLngBounds();
     this.places = places;
     this.places.forEach(place => {
       this.markerService.createMarker(place, this.getCurrentMap(), this.getInfoWindow());
+      bounds.extend(place.geometry.location);
     });
+    this.currentMap.fitBounds(bounds);
   }
 
   getFilteredPlaces(): Array<any> {
@@ -74,8 +77,13 @@ export class MapsPlacesService {
     this.infoWindow = infoWindow;
   }
 
-  setLatLng(latLng: LatLgn): void {
-    this.myLatLng = latLng;
+  setLatLng(latLng: string): void {
+    const array = latLng.split(',');
+    const newLatLng = {
+      lat: parseFloat(array[0]),
+      lng: parseFloat(array[1]),
+    };
+    this.myLatLng = newLatLng;
   }
 
   getCurrentMap(): google.maps.Map {

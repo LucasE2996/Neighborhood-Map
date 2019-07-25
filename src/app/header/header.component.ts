@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { MapsPlacesService } from '../services/maps-places.service';
 import { MarkerService } from '../services/marker.service';
 import { MapsPlace } from '../models/place.model';
@@ -10,6 +10,9 @@ import { MapsPlace } from '../models/place.model';
 export class HeaderComponent {
 
     @ViewChild('sidenav') sidenav: any;
+    @ViewChild('city') cityInput: ElementRef;
+    @ViewChild('category') categoryInput: ElementRef;
+    @ViewChild('placeInput') placeInput: ElementRef;
     @Input() modalError: any;
     @Input() loadingFlag: boolean;
 
@@ -79,10 +82,11 @@ export class HeaderComponent {
      * @param value input value for search
      * @param event event
      */
-    fireSearch(value: string) {
+    fireSearch() {
         this.loadingFlag = false;
         this.markerService.clearMarkers();
-        this.placesService.searchPlace(value)
+        this.placesService.setLatLng(this.cityInput.nativeElement.value);
+        this.placesService.searchPlace(this.placeInput.nativeElement.value, this.categoryInput.nativeElement.value)
             .subscribe((places: Array<MapsPlace>) => {
                 this.placesService.setPlaces(places);
             },

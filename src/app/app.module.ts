@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './header/header.component';
 import {
@@ -37,7 +38,8 @@ import { MapsPlacesService } from './services/maps-places.service';
     MzSpinnerModule,
     MzIconModule,
     MzIconMdiModule,
-    MzSelectModule
+    MzSelectModule,
+    FormsModule
   ],
   providers: [
     MarkerService,

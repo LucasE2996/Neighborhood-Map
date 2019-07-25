@@ -31,37 +31,39 @@
 
 <mz-modal #bottomSheetModal [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions">
   <mz-modal-header>
-    <h4>Modal Title</h4>
+    <h4>Search for your food!</h4>
   </mz-modal-header>
   <mz-modal-content>
-    <mz-select-container [inline]="true">
-      <select mz-select id="options-select" [placeholder]="'Select a city'">
+    <mz-select-container>
+      <select mz-select #city [placeholder]="'Select a city'">
         <optgroup label="brazil">
-          <option value="">São Paulo</option>
-          <option value="">São José dos Campos</option>
+          <option value="-23.561112,-46.622401">São Paulo</option>
+          <option value="-23.189378,-45.882747">São José dos Campos</option>
         </optgroup>
         <optgroup label="canada">
           <option data-icon="assets/select-icon-3.jpg" class="left circle">Vancouver</option>
         </optgroup>
       </select>
     </mz-select-container>
-    <mz-select-container [inline]="true">
-      <select mz-select id="options-select" [placeholder]="'Select a category'">
+    <mz-select-container>
+      <select mz-select #category [placeholder]="'Select a category'">
         <optgroup label="brazil">
-          <option value="">São Paulo</option>
-          <option value="">São José dos Campos</option>
+          <option value="hamburguer">Hamburguer</option>
+          <option value="pizza">Pizza</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="japaneese food">Japoneese</option>
         </optgroup>
         <optgroup label="canada">
           <option value="">Vancouver</option>
         </optgroup>
       </select>
     </mz-select-container>
-    <mz-input-container [inline]="true" class="white-text margin-left-10">
-      <input #placeInput mz-input placeholder="Search" id="search-input" type="text">
+    <mz-input-container class=" margin-left-10">
+      <input #placeInput mz-input placeholder="Place name, street, neightboor..." id="search-input" type="text">
     </mz-input-container>
   </mz-modal-content>
   <mz-modal-footer>
     <button mz-button [flat]="true" mz-modal-close>Close</button>
-    <button mz-button [flat]="true" mz-modal-close (click)="fireSearch(placeInput.value)">Search</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="fireSearch()">Search</button>
   </mz-modal-footer>
 </mz-modal>

@@ -27,19 +27,19 @@ export class AppComponent implements OnInit {
 
     initMap() {
         this.loadingFlag = false;
-        const myLatLgn: LatLgn = { lat: -23.6020717, lng: -46.6763941 };
+        const myLatLgn = '-23.6020717,-46.6763941';
+        this.placesService.setLatLng(myLatLgn);
         const infoWindow = new google.maps.InfoWindow;
         const map = new google.maps.Map(
             this.gmapElement.nativeElement,
             {
                 zoom: 15,
-                center: myLatLgn,
+                center: this.placesService.getLatLng(),
             });
         this.placesService.setCurrentMap(map);
         this.placesService.setInfoWindow(infoWindow);
-        this.placesService.setLatLng(myLatLgn);
 
-        this.placesService.searchPlace('restaurante')
+        this.placesService.searchPlace('underground', 'hamburguer')
             .subscribe((places: Array<MapsPlace>) => {
                 this.placesService.setPlaces(places);
             },
