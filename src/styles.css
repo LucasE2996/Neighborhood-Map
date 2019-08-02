@@ -35,17 +35,60 @@ html, body {
     padding-left: 20px;
 }
 
-.navBar,
-.navBar button {
+.navBar, .navBar button {
     background-color: #2c2f33;
     color: #fff;
 }
 
-button:hover,
-button:focus {
+button:hover, button:focus {
     background-color: #7289da !important;
 }
 
 .navBar input:focus {
     border-color: #fff !important;
+}
+
+.marker-content {
+    width: 310px;
+    height: 200px;
+    text-align: center;
+}
+
+.marker-content p, .marker-content h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#siteNotice>img {
+    width: 15px;
+    height: 15px;
+}
+
+.marker-title {
+    margin: 5px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-title span {
+    margin: 0 10px;
+}
+
+.marker-title h3 {
+    font-size: 1.2rem;
+}
+
+.marker-image {
+    width: 300px;
+    height: 50%;
+    overflow: hidden;
+    background-color: #b8b8b8;
+}
+
+.marker-image>img {
+    max-width: 100%;
+    max-height: none;
+    overflow: hidden;
 }
