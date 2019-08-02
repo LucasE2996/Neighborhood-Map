@@ -2,6 +2,7 @@ import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { MapsPlacesService } from '../services/maps-places.service';
 import { MarkerService } from '../services/marker.service';
 import { MapsPlace } from '../models/place.model';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
     selector: 'app-header',
@@ -14,11 +15,11 @@ export class HeaderComponent {
     @ViewChild('category') categoryInput: ElementRef;
     @ViewChild('placeInput') placeInput: ElementRef;
     @Input() modalError: any;
-    @Input() loadingFlag: boolean;
 
     private placesService: MapsPlacesService;
     private markerService: MarkerService;
     private filteredPlaces: Array<any>;
+    public loadingService: LoadingService;
     public modalOptions: Materialize.ModalOptions = {
         dismissible: false, // Modal can be dismissed by clicking outside of the modal
         opacity: .5, // Opacity of modal background
@@ -35,9 +36,11 @@ export class HeaderComponent {
     constructor(
         placesService: MapsPlacesService,
         markerService: MarkerService,
+        loadingService: LoadingService,
     ) {
         this.placesService = placesService;
         this.markerService = markerService;
+        this.loadingService = loadingService;
     }
 
     /**
@@ -83,7 +86,7 @@ export class HeaderComponent {
      * @param event event
      */
     fireSearch() {
-        this.loadingFlag = false;
+        this.loadingService.activateLoading();
         this.markerService.clearMarkers();
         this.placesService.setLatLng(this.cityInput.nativeElement.value);
         this.placesService.searchPlace(this.placeInput.nativeElement.value, this.categoryInput.nativeElement.value)
@@ -95,7 +98,7 @@ export class HeaderComponent {
                     console.error(error);
                 },
                 () => {
-                    this.loadingFlag = true;
+                    this.loadingService.desactivateLoading();
                 });
     }
 }

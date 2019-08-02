@@ -1,4 +1,4 @@
-<app-header [modalError]="modalError" [loadingFlag]="loadingFlag"></app-header>
+<app-header [modalError]="modalError"></app-header>
 <div #gmap id="map"></div>
 
 <!-- modal  -->
@@ -15,7 +15,7 @@
 </mz-modal>
 
 <!-- loading -->
-<div class="loading-wrapper" [class.display-none]="loadingFlag">
+<div class="loading-wrapper" [class.display-none]="loadingService.loadingFlag">
     <mz-spinner [color]="'blue'" [size]="'big'" id="main-spinner" class="loading">
     </mz-spinner>
 </div>

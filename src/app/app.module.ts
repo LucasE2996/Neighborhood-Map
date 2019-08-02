@@ -20,6 +20,7 @@ import {
 } from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
 import { MapsPlacesService } from './services/maps-places.service';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MapsPlacesService } from './services/maps-places.service';
   providers: [
     MarkerService,
     MapsPlacesService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })
