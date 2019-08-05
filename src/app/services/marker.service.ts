@@ -23,8 +23,7 @@ export class MarkerService {
   }
 
   createMarker(place: any, map: google.maps.Map, infoWindow: google.maps.InfoWindow): void {
-    const imageUrl = place.photos ? place.photos[0].getUrl() : '';
-    const infoWindowContent = this.newInfoWindowContent(place.name, place.icon, place.vicinity, imageUrl);
+    const infoWindowContent = this.newInfoWindowContent(place);
     let marker: google.maps.Marker;
 
     marker = new google.maps.Marker({
@@ -49,15 +48,17 @@ export class MarkerService {
     this.markers.push(marker);
   }
 
-  private newInfoWindowContent(title: string, icon: string, address: string, imageUrl: string) {
+  private newInfoWindowContent(place: any) {
+    const imageUrl = place.photos ? place.photos[0].getUrl() : '';
     return String.raw`
         <div class="marker-content">
           <div class="marker-image"><img src="${imageUrl}"></div>
           <div class="marker-title">
-            <span id="siteNotice"><img src="${icon}"></img></span>
-            <h3 title="${title}">${title}</h3>
+            <span id="siteNotice"><img src="${place.icon}"></img></span>
+            <h3 title="${place.name}">${place.name}</h3>
+            <span id="favoriteIcon")"><i class="material-icons">star_border</i></span>
           </div>
-          <div class="bodyContent"><p title="${address}">${address}</p></div>
+          <div class="bodyContent"><p title="${place.vicinity}">${place.vicinity}</p></div>
         </div>
       `;
   }

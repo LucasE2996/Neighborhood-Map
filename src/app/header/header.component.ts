@@ -68,9 +68,11 @@ export class HeaderComponent {
      * Handles the item clicked event
      * @param innerText The item clicked name
      */
-    itemClickEvent(innerText: string) {
+    itemClickEvent(id: string) {
+        const parent = document.querySelectorAll(`#${id} a`)[0];
+        const placeName = parent.innerText;
         const marker = this.markerService.getMarkers().find(item => {
-            return item.getTitle().toLowerCase().includes(innerText.toLowerCase());
+            return item.getTitle().toLowerCase().includes(placeName.toLowerCase());
         });
 
         if (marker) {
@@ -100,5 +102,29 @@ export class HeaderComponent {
                 () => {
                     this.loadingService.desactivateLoading();
                 });
+    }
+
+    showItemOptions(id: string) {
+        const element = document.querySelectorAll(`#${id} .option-box`)[0];
+        const newClass = element.className.replace('display-none', '');
+        element.className = newClass;
+    }
+
+    hideItemOption(id: string) {
+        const element =  document.querySelectorAll(`#${id} .option-box`)[0];
+        const newClass = element.className.concat(' display-none');
+        element.className = newClass;
+    }
+
+    saveAsFavorite(id: string) {
+        this.placesService.saveAsFavorite(id);
+    }
+
+    isItemInLocalStorage(placeId: string): boolean {
+        return this.placesService.isItemInLocalStorage(placeId);
+    }
+
+    getAllFavoritePlaces() {
+        return this.placesService.getFavoritePlaces();
     }
 }

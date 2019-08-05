@@ -7,6 +7,10 @@
     <i mz-icon [align]="'left'" [icon]="'search'" [size]="'medium'">
     </i>
   </button>
+  <button mz-button id="btn-sidenav" (click)="favoriteModal.openModal()" [float]="true" class="margin-left-10">
+    <i mz-icon [align]="'left'" [icon]="'star_border'" [size]="'medium'">
+    </i>
+  </button>
 </mz-navbar>
 
 <!-- side menu -->
@@ -25,8 +29,22 @@
   </div>
   <mz-sidenav-divider></mz-sidenav-divider>
   <h5 class="sidenav-item">List of places</h5>
-  <mz-sidenav-link *ngFor="let place of filteredPlaces"> <a class="waves-effect"
-      (click)="itemClickEvent($event.target.innerText)">{{ place.name }}</a></mz-sidenav-link>
+  <mz-sidenav-link *ngFor="let place of filteredPlaces" [id]="place.id" (mouseenter)="showItemOptions(place.id)"
+    (mouseleave)="hideItemOption(place.id)">
+    <a class="waves-effect">{{ place.name }}
+    </a>
+    <div class="option-box display-none">
+      <button mz-button [id]="place.id + '_button1'" [float]="true" class="item-button"
+        (click)="saveAsFavorite(place.id)">
+        <i mz-icon [align]="'right'" [icon]="isItemInLocalStorage(place.id) ? 'star' : 'star_border'"
+          [size]="'medium'"></i>
+      </button>
+      <button mz-button [id]="place.id + '_button2'" [float]="true" class="item-button"
+        (click)="itemClickEvent(place.id)">
+        <i mz-icon [align]="'right'" [icon]="'arrow_forward'" [size]="'medium'"></i>
+      </button>
+    </div>
+  </mz-sidenav-link>
 </mz-sidenav>
 
 <mz-modal #bottomSheetModal [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions">
@@ -41,7 +59,7 @@
           <option value="-23.189378,-45.882747">São José dos Campos</option>
         </optgroup>
         <optgroup label="canada">
-          <option data-icon="assets/select-icon-3.jpg" class="left circle">Vancouver</option>
+          <option value="49.2578263,-123.1939442">Vancouver</option>
         </optgroup>
       </select>
     </mz-select-container>
@@ -56,6 +74,38 @@
     <mz-input-container class=" margin-left-10">
       <input #placeInput mz-input placeholder="Place name, street, neightboor..." id="search-input" type="text">
     </mz-input-container>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Close</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="fireSearch()">Search</button>
+  </mz-modal-footer>
+</mz-modal>
+
+<mz-modal #favoriteModal [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions">
+  <mz-modal-header>
+    <h4>Your favorite places</h4>
+  </mz-modal-header>
+  <mz-modal-content>
+    <mz-card *ngFor="let place of getAllFavoritePlaces()" class="blue-grey darken-1 white-text" [horizontal]="true" >
+      <mz-card-image *ngIf="place.photos">
+        <img src="place.photos[0].getUrl()" />
+        <button mz-button mz-halfway-fab [float]="true"><i mz-icon [icon]="'add'"></i></button>
+      </mz-card-image>
+      <mz-card-image-title>
+        Card Image Title
+      </mz-card-image-title>
+      <mz-card-title>
+        Card Title
+      </mz-card-title>
+      <mz-card-content>
+        I am a very simple card. I am good at containing small bits of information. I am convenient because I require
+        little markup to use effectively.
+      </mz-card-content>
+      <mz-card-action>
+        <a href="#">This is a link</a>
+        <a href="#">This is a link</a>
+      </mz-card-action>
+    </mz-card>
   </mz-modal-content>
   <mz-modal-footer>
     <button mz-button [flat]="true" mz-modal-close>Close</button>

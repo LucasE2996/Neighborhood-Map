@@ -44,6 +44,12 @@ export class MapsPlacesService {
     return this.places;
   }
 
+  getPlace(placeId: string): any {
+    return this.places.filter((place) => {
+      return place.id === placeId;
+    });
+  }
+
   setPlaces(places: Array<any>): void {
     if (!places) {
       return;
@@ -96,5 +102,41 @@ export class MapsPlacesService {
 
   getLatLng(): LatLgn {
     return this.myLatLng;
+  }
+
+  saveAsFavorite(placeId: string): void {
+    const place = this.getPlace(placeId);
+
+    if (!place) {
+      return;
+    }
+
+    if (this.isLocalStorageInitialized()) {
+      if (this.isItemInLocalStorage(placeId)) {
+        return;
+      }
+      const placeList = JSON.parse(localStorage.getItem('favoritePlaces'));
+      placeList.push(place);
+      localStorage.setItem('favoritePlaces', JSON.stringify(placeList));
+    } else {
+      const placeArrayString = JSON.stringify([place]);
+      localStorage.setItem('favoritePlaces', placeArrayString);
+    }
+  }
+
+  getFavoritePlaces(): Array<any> {
+    return JSON.parse(localStorage.getItem('favoritePlaces'));
+  }
+
+  private isLocalStorageInitialized(): boolean {
+    return !!localStorage.getItem('favoritePlaces');
+  }
+
+  isItemInLocalStorage(id: string) {
+    const placeList = this.getFavoritePlaces();
+    const result = placeList.filter((place) => {
+      return place.id === id;
+    });
+    return !!result;
   }
 }

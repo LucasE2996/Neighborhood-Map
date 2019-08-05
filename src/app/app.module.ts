@@ -15,7 +15,8 @@ import {
   MzSpinnerModule,
   MzIconModule,
   MzIconMdiModule,
-  MzSelectModule
+  MzSelectModule,
+  MzCardModule
 
 } from 'ngx-materialize';
 import { MarkerService } from './services/marker.service';
@@ -40,7 +41,8 @@ import { LoadingService } from './services/loading.service';
     MzIconModule,
     MzIconMdiModule,
     MzSelectModule,
-    FormsModule
+    FormsModule,
+    MzCardModule
   ],
   providers: [
     MarkerService,

@@ -17,3 +17,20 @@ li a:hover {
 .navBar mz-select-container>div {
     width: 250px;
 }
+
+mz-sidenav-link > li {
+    position: relative;
+}
+
+.option-box {
+    position: absolute;
+    top: 4px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-button {
+    margin: 0px 5px;   
+}
