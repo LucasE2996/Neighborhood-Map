@@ -6,6 +6,8 @@
   </a>
 </p>
 
+<h3 align="center">This project help you find restaurants all over the world using the google maps API.<h3>
+
 ## Install
 
 ```sh
